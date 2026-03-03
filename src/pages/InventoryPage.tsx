@@ -41,7 +41,7 @@ export default function InventoryPage() {
             const url = editId ? `/api/inventory/${editId}` : '/api/inventory'
             const method = editId ? 'PATCH' : 'POST'
             const res = await fetch(url, {
-                method,
+                method: editId ? 'PUT' : 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
                 body: JSON.stringify(form)

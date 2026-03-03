@@ -26,9 +26,12 @@ const PORT = process.env.PORT || 3001
 // Initialize database
 initializeDatabase()
 
+// Trust deployment proxies (like Railway)
+app.set('trust proxy', 1)
+
 // Middleware
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' ? false : 'http://localhost:5173',
+    origin: true,
     credentials: true
 }))
 app.use(express.json())
