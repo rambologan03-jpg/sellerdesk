@@ -1,5 +1,6 @@
 import express from 'express'
 import session from 'express-session'
+import connectSqlite3 from 'connect-sqlite3'
 import cors from 'cors'
 import path from 'path'
 import { initializeDatabase } from './db'
@@ -34,14 +35,24 @@ app.use(cors({
     origin: true,
     credentials: true
 }))
+
 app.use(express.json())
+
+// ✅ SQLite Session Store (FIXED)
+const SQLiteStore = connectSqlite3(session)
+
 app.use(session({
-    secret: process.env.SESSION_SECRET || "sellerdesk-secret-2024",
+    store: new SQLiteStore({
+        db: 'sessions.db',
+        dir: './'
+    }),
+    secret: process.env.SESSION_SECRET || 'sellerdesk-secret',
     resave: false,
     saveUninitialized: false,
     cookie: {
         secure: false,
-        sameSite: "lax",
+        sameSite: 'lax',
+        httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000
     }
 }))
@@ -62,7 +73,7 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-// Initialize database then start server
+// Start server
 initializeDatabase().then(() => {
     app.listen(PORT, () => {
         console.log(`🚀 SellerDesk server running on http://localhost:${PORT}`)
