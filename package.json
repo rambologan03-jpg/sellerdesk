@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "tsx watch server/index.ts",
     "dev:client": "vite",
-    "build": "vite build",
+    "build": "vite build && npm run build:server",
     "start": "node dist-server/index.js",
     "build:server": "esbuild server/index.ts --bundle --platform=node --outfile=dist-server/index.js --external:@libsql/client",
     "build:all": "npm run build && npm run build:server",
