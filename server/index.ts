@@ -33,12 +33,13 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'sellerdesk-secret-key-2024',
+    secret: process.env.SESSION_SECRET || "sellerdesk-secret-2024",
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        secure: false,
+        sameSite: "lax",
+        maxAge: 24 * 60 * 60 * 1000
     }
 }))
 
@@ -52,9 +53,9 @@ app.use('/api/users', usersRouter)
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(process.cwd(), 'dist')))
+    app.use(express.static(path.join(__dirname, '../dist')))
     app.get('*', (req, res) => {
-        res.sendFile(path.join(process.cwd(), 'dist', 'index.html'))
+        res.sendFile(path.join(__dirname, '../dist/index.html'))
     })
 }
 
