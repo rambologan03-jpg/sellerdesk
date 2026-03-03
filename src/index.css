@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply font-sans bg-gray-50 text-gray-900;
+    overscroll-behavior: none;
+  }
+  :root {
+    --purple: #7B2D8B;
+    --purple-light: #9B4DB0;
+    --purple-dark: #5B1D6B;
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-4;
+  }
+  .btn-primary {
+    @apply bg-purple-700 text-white rounded-xl px-4 py-2.5 font-semibold text-sm
+           active:scale-95 transition-all duration-150 shadow-md shadow-purple-700/20
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply bg-gray-100 text-gray-700 rounded-xl px-4 py-2.5 font-semibold text-sm
+           active:scale-95 transition-all duration-150;
+  }
+  .btn-danger {
+    @apply bg-red-500 text-white rounded-xl px-4 py-2.5 font-semibold text-sm
+           active:scale-95 transition-all duration-150;
+  }
+  .input-field {
+    @apply w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm
+           focus:outline-none focus:ring-2 focus:ring-purple-700/30 focus:border-purple-700
+           transition-all duration-150;
+  }
+  .label {
+    @apply block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+  .page-header {
+    @apply bg-purple-700 text-white px-4 pt-12 pb-6;
+  }
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50
+           flex items-center justify-around;
+    padding-bottom: max(env(safe-area-inset-bottom), 8px);
+  }
+  .nav-item {
+    @apply flex flex-col items-center gap-0.5 py-2 px-3 rounded-xl cursor-pointer
+           transition-all duration-200 min-w-[60px];
+  }
+  .status-pill {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+}
+
+/* Smooth page transitions */
+.page-enter {
+  animation: slideUp 0.25s ease forwards;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 0; height: 0; }
+
+/* Safe area padding for content */
+.content-area {
+  padding-bottom: calc(72px + max(env(safe-area-inset-bottom), 8px));
+}
+
+/* Pin pad */
+.pin-dot {
+  @apply w-4 h-4 rounded-full border-2 border-purple-700 transition-all duration-200;
+}
+.pin-dot.filled {
+  @apply bg-purple-700;
+}
+.pin-key {
+  @apply flex items-center justify-center w-16 h-16 rounded-full bg-white text-xl font-semibold 
+         text-gray-800 shadow-sm border border-gray-100 active:bg-purple-50 active:scale-95 
+         transition-all duration-150 cursor-pointer;
+}
